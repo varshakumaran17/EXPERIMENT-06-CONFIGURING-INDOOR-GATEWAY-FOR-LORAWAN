@@ -82,11 +82,38 @@ The frequency band is allocated now. Now we need to get the Gateway ID. To get t
 
 
 
-## OUTPUT 
+## PROGRAM
+
+```
+int adc_val;
+ while (1)
+  {
+    HAL_ADC_Start(&hadc);
+                           HAL_ADC_PollForConversion(&hadc,100);
+                           adc_val = HAL_ADC_GetValue(&hadc);
+                           HAL_ADC_Stop(&hadc);
+                           HAL_Delay(500);
+
+                           uint32_t soilmoist;
+    soilmoist=adc_val/10.24;
+                           printf("soilmoisture :%ld\n",soilmoist);
+                           if(adc_val<500)
+                           {
+                        	   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
+                           }
+                           if(adc_val>500)
+                           {
+                        	   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+                           }
 
 
+
+  }
+```
+## OUTPUT
+![image](https://github.com/user-attachments/assets/a46789c8-ac3b-4a76-a67f-2af626c7882a)
 
 
 ## Results: 
 
-
+Interfacing a Analog Input (soil moisture sensor) with ARM microcontroller based IOT development is executed and the results visualized on serial monitor
